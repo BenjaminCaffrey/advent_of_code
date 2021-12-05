@@ -7,7 +7,7 @@ class P:
         self.x = tuple[0]
         self.y = tuple[1]
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"({self.x},{self.y})"
 
 
@@ -19,23 +19,17 @@ class VentLine:
     def mark_dangerous_points(
         self, grid: Dict[Tuple[int, int], int], count_diagonal: bool
     ) -> None:
-        # print(f"p1: {self.p1}, p2: {self.p2}")
         if self.p1.x == self.p2.x:
             for y in range(min(self.p1.y, self.p2.y), max(self.p1.y, self.p2.y) + 1):
-                # print(f"Marking point {self.p1.x, y}")
                 grid[(self.p1.x, y)] += 1
         elif self.p1.y == self.p2.y:
             for x in range(min(self.p1.x, self.p2.x), max(self.p1.x, self.p2.x) + 1):
-                # print(f"Marking point {x, self.p1.y}")
                 grid[(x, self.p1.y)] += 1
         elif count_diagonal:
             num_points = abs(self.p1.x - self.p2.x) + 1
             x_direction = 1 if self.p1.x < self.p2.x else -1
             y_direction = 1 if self.p1.y < self.p2.y else -1
             for i in range(num_points):
-                # print(
-                #     f"Marking point {(self.p1.x + (i * x_direction), self.p1.y + (i * y_direction))}"
-                # )
                 grid[
                     (self.p1.x + (i * x_direction), self.p1.y + (i * y_direction))
                 ] += 1
@@ -49,7 +43,6 @@ def get_num_dangerous_points(
     danger_grid: Dict[Tuple[int, int], int] = defaultdict(int)
     for vent_line in vent_lines:
         vent_line.mark_dangerous_points(danger_grid, count_diagonal)
-    # print(danger_grid)
     return len([value for value in danger_grid.values() if value > 1])
 
 
