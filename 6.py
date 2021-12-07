@@ -1,20 +1,16 @@
-from typing import List, Dict
+from typing import DefaultDict, List, Dict
 
 
 def memo_days() -> Dict[int, int]:
-    cur_fish = [0]
-    num_fish_on_day = {}
+    num_fish_on_day = {0: 1}
+    num_zeros_on_day = DefaultDict(int)
+    num_zeros_on_day[0] = 1
 
-    for i in range(1, 80):
-        next_fish = []
-        for fish in cur_fish:
-            if fish > 0:
-                next_fish.append(fish - 1)
-            elif fish == 0:
-                next_fish.extend([6, 8])
-        num_fish_on_day[i] = len(next_fish)
-        cur_fish = next_fish
-
+    for i in range(0, 256):
+        if num_zeros_on_day[i]:
+            num_zeros_on_day[i + 7] += num_zeros_on_day[i]
+            num_zeros_on_day[i + 9] += num_zeros_on_day[i]
+        num_fish_on_day[i + 1] = num_fish_on_day[i] + num_zeros_on_day[i]
     return num_fish_on_day
 
 
@@ -35,6 +31,7 @@ def _parse_input(filename: str) -> List[int]:
 
 if __name__ == "__main__":
     num_fish_on_day = memo_days()
+    print(num_fish_on_day)
 
     fish_list = _parse_input("6-input-example.txt")
     sum_fish = calc_total_fish(fish_list, 80, num_fish_on_day)
@@ -45,5 +42,5 @@ if __name__ == "__main__":
     print(sum_fish)
 
     fish_list = _parse_input("6-input.txt")
-    sum_fish = calc_total_fish(fish_list, 80, num_fish_on_day)
+    sum_fish = calc_total_fish(fish_list, 256, num_fish_on_day)
     print(sum_fish)
