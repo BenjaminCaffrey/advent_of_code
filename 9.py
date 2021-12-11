@@ -40,11 +40,11 @@ def find_low_spots(height_map: List[List[int]]) -> List[P]:
 
 def get_basin_size(p: P, height_map: List[List[int]]) -> int:
     seen_points = {(p.r, p.c): True}
-    recursive_bfs(p.r, p.c, seen_points, height_map)
+    recursive_dfs(p.r, p.c, seen_points, height_map)
     return len(seen_points.values())
 
 
-def recursive_bfs(
+def recursive_dfs(
     r: int,
     c: int,
     seen_points: Dict[Tuple[int, int], bool],
@@ -60,21 +60,21 @@ def recursive_bfs(
     # Check left
     if (c > 0) and (height_map[r][c - 1] != 9):
         if not seen_points.get((r, c - 1), False):
-            recursive_bfs(r, c - 1, seen_points, height_map)
+            recursive_dfs(r, c - 1, seen_points, height_map)
     # Check up
     if (r > 0) and (height_map[r - 1][c] != 9):
         if not seen_points.get((r - 1, c), False):
-            recursive_bfs(r - 1, c, seen_points, height_map)
+            recursive_dfs(r - 1, c, seen_points, height_map)
 
     # Check right
     if (c < max_col - 1) and (height_map[r][c + 1] != 9):
         if not seen_points.get((r, c + 1), False):
-            recursive_bfs(r, c + 1, seen_points, height_map)
+            recursive_dfs(r, c + 1, seen_points, height_map)
 
     # Check below
     if (r < max_row - 1) and (height_map[r + 1][c] != 9):
         if not seen_points.get((r + 1, c), False):
-            recursive_bfs(r + 1, c, seen_points, height_map)
+            recursive_dfs(r + 1, c, seen_points, height_map)
 
 
 def _parse_input(filename: str) -> List[List[int]]:
