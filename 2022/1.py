@@ -2,7 +2,7 @@ from typing import List, Optional
 
 
 # Part 1:
-# O(N)
+# O(N) where N is the total number of elf snacks
 def calculate_max_elf_calories() -> int:
     elven_food: List[List[int]] = []
     cur_elf_food = []
@@ -20,7 +20,7 @@ def calculate_max_elf_calories() -> int:
 # Part 2:
 
 # Poor man's max heap... keeps track of max N items
-# listify is an O(N) operation
+# listify is an O(N) operation where N is the number of max items we're tracking
 class MaxList:
     def __init__(self, n):
         self.limit = n
@@ -35,7 +35,8 @@ class MaxList:
                     self.cur_min = min(self.values)
                     break
 
-# O(N * M) or O(N) in this case because M (top number of elves) is constant at 3      
+# O(N * M) where N is the total number of elf snacks and M is the number of top elves we're tracking
+# O(N) in this case because M (top number of elves) is constant at 3      
 def calculate_max_n_elf_calories(n: int) -> int:
     elven_food: List[List[int]] = []
     cur_elf_food = []
