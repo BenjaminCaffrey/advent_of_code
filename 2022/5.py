@@ -91,4 +91,4 @@ if __name__ == "__main__":
     crate_stacks, stack_commands = parse_input()
 
     for command in stack_commands: 
-        crate_stacks.execute_command_9000(command)    
+        crate_stacks.execute_command_9001(command)    
